@@ -26,5 +26,14 @@ wait 1 second
 - turn on right-to-left
 - safety
 
+--> edit: safety has to be in the loop
 
+
+
+recursion in the loop, i.e:
+run LR,
+turn the mosfets on,
+check for overcurrent.
+If so, run safety loop
+turn
 
