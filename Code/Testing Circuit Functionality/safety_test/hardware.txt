@@ -1,0 +1,8 @@
+setup is as follows:
+
+sensing resistor +ve to +ve of psu
+gnd pin of sensing res to -ve of psu
+
+should trip at roughly 0.1v.
+
+Test at 0.01-0.15V with 0.1v increments
