@@ -1,0 +1,27 @@
+Hardware:
+Connect 2 diodes to output pins, one in each direction (tests the change in direction)
+
+Software:
+initialise the pins and variables
+
+functions:
+- left_to_right
+        - first h_bridge config in pin configurations
+- right_to_left
+        - second h-bridge confit in pin configurations
+- safety (in pin_config use emergency shutoff)
+        - check if should turn off?
+        - switch all off accordingly
+
+
+
+loop
+- safety
+- Turn on left-to-right
+- safety
+wait 1 second
+- turn on right-to-left
+- safety
+
+
+
