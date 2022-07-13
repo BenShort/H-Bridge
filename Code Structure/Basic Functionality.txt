@@ -4,6 +4,9 @@ Connect 2 diodes to output pins, one in each direction (tests the change in dire
 Software:
 initialise the pins and variables
 
+Libraries:
+serial
+
 functions:
 - left_to_right
         - first h_bridge config in pin configurations

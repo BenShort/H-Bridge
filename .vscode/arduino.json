@@ -1,0 +1,5 @@
+{
+    "board": "arduino:avr:uno",
+    "programmer": "arduino:avrisp",
+    "sketch": "Functional Examples\\basic_functionality\\basic_functionality.ino"
+}
