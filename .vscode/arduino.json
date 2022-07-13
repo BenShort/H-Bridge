@@ -1,5 +1,5 @@
 {
     "board": "arduino:avr:uno",
     "programmer": "arduino:avrisp",
-    "sketch": "Functional Examples\\basic_functionality\\basic_functionality.ino"
+    "sketch": "Code\\Testing Circuit Functionality\\h_bridge_test\\h_bridge_test.ino"
 }
