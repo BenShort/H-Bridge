@@ -73,6 +73,7 @@ bool LR(double on_time){
 
     delay(5000);
 
+    //will this run extra time when we don't need to?
     while (!digitalRead(D5)){
       delay(5000);
     }
