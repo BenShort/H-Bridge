@@ -1,0 +1,39 @@
+---------------Pins----------------------------------------------
+
+write to these pins:
+D1 -> controls top pMOS, left side
+D2 -> controls bottom nMOS, left side
+D3 -> controls top pMOS, right side
+D4 -> controls bottom nMOS, right side
+
+read to this pin:
+D5 -> signal for overcurrent. 
+        - High means keep on
+        - Low means turn off
+
+
+---------------When switching on left to right---------------------
+
+turning on:
+    - open D2, D3
+    - close D1, D4
+turning off:
+    - open D1, D4
+
+---------------Right to left----------------------------------------
+turning on:
+    - open D1, D4
+    - close D2, D3
+turning off:
+    - open D2, D3
+
+---------------Emergency Shutoff------------------------------------
+if in LR operation:
+    - open D1, D4
+RL operation:
+    - open D2, D3
+
+----------------Initialisation--------------------------------------
+states:
+    - D1, D2, D3, D4 open and as write pins
+    - D5 as a read pin
