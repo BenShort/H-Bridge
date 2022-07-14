@@ -5,11 +5,11 @@
 //deadtimes in mns
 const int MDT = 10; //change to actual value once measured with an oscilloscope
 //Pins
-const int D1 = 1;
-const int D2 = 2;
-const int D3 = 3;
-const int D4 = 4;
-const int D5 = 5;
+const int D1 = 2;
+const int D2 = 3;
+const int D3 = 4;
+const int D4 = 5;
+const int D5 = 6;
 
 //on time for LED test
 const int on_time_LR = 500;
