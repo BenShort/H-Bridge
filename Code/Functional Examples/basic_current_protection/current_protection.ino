@@ -2,7 +2,7 @@
 
 //this has no protection
 //deadtimes in mns
-const int MDT = 0.010;
+const int MDT = 1;
 //Pins
 const int D1 = 1;
 const int D2 = 2;

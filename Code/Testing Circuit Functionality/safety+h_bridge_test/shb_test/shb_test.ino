@@ -3,7 +3,7 @@
 //TODO: time processes @BenShort
 //this has no protection
 //deadtimes in mns
-const int MDT = 10; //change to actual value once measured with an oscilloscope
+const int MDT = 1; //change to actual value once measured with an oscilloscope
 //Pins
 const int D1 = 2;
 const int D2 = 3;
@@ -103,15 +103,16 @@ bool RL(double on_time, double off_time){
   //this limits the function to around 100kHz strobe, which is more than enough for the intended function
   if(!digitalRead(D5)){
     //emergency off
-    digitalWrite(D1, false);
     digitalWrite(D2, false);
+    digitalWrite(D1, false);
     digitalWrite(D3, false);
     digitalWrite(D4, false);
 
     delay(5000);
-
+    Serial.println("Tripped");
     //will this run extra time when we don't need to?
     while (!digitalRead(D5)){
+      Serial.println("Tripped");
       delay(5000);
     }
     //this allows us to skip the timers later on, which can be long!
@@ -133,20 +134,21 @@ bool RL(double on_time, double off_time){
   return false;
 }
 void loop() {
+  //if nothing connected otherwise will just run through eventhough it shouldn't
   // put your main code here, to run repeatedly:
   //LR
   t1 = millis();
   LR(on_time_LR, off_time_LR);
   t2 = millis();
   t3 = t2 - t1;
-  Serial.println("Successfully executed LR function in time: " + t3);
+  Serial.println("Successfully executed LR function in time: " + String(t3));
 
   //RL
   t1 = millis();
   RL(on_time_RL, off_time_RL);
   t2 = millis();
   t3 = t2 - t1;
-  Serial.println("Successfully executed RL function in time: " + t3);
+  Serial.println("Successfully executed RL function in time: " + String(t3));
 
   //slight delay before loop
   delay(2000);
