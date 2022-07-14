@@ -2,5 +2,5 @@
     "board": "arduino:avr:uno",
     "programmer": "arduino:avrispmkii",
     "sketch": "Code\\Testing Circuit Functionality\\h_bridge_test\\h_bridge_test.ino",
-    "port": "COM14"
+    "port": "COM3"
 }
