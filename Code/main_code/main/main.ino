@@ -11,18 +11,11 @@ const int D3 = 4;
 const int D4 = 5;
 const int D5 = 6;
 
-//on time for LED test
-float on_time_LR = 500;
-float on_time_RL = 500;
-float off_time_LR = 500;
-float off_time_RL = 500;
-
-long int t1, t2, t3, begin_timer, end_timer, delta_time;
-
+//other variables:
+float on_time = 500;
+long int begin_timer, end_timer, delta_time;
 int myTimeout = 10, length;
-
 float frequency;
-
 String value, function, frequency_string;
 
 void setup() {
@@ -154,29 +147,22 @@ void main(){
         //decide what to do
 
         if(function == "LR"){
-            on_time_LR = 1/frequency;
-            on_time_LR = on_time_LR/2;
-            off_time_LR = on_time_LR;
-            
+            on_time = 1/frequency;
+            on_time = on_time/2;
         }
         else if(function == "RL"){
-            on_time_RL = 1/frequency;
-            on_time_RL = on_time_RL/2;
-            off_time_RL = on_time_RL;
-            RL(on_time_RL, off_time_RL);
+            on_time = 1/frequency;
+            on_time = on_time/2;
         }
     }
     if(function == "LR"){
-        LR(on_time_LR, off_time_LR);
+        LR(on_time, on_time);
     }
     else if (function == "RL"){
-        RL(on_time_RL, off_time_RL);
+        RL(on_time, on_time);
     }
 }
 
 void loop() {
-  //if nothing connected otherwise will just run through eventhough it shouldn't
-  // put your main code here, to run repeatedly:
-  //LR
-  main();
+    main();
 }
