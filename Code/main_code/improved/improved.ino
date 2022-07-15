@@ -150,11 +150,11 @@ void process(){
     }
     if(function == "LR"){
         LR(on_time, off_time);
-        //Serial.println(function + " " + String(on_time) + "," + String(off_time));
+        Serial.println(function + " " + String(on_time) + "," + String(off_time));
     }
     else if (function == "RL"){
         RL(on_time, off_time);
-        //Serial.println(function + " " + String(on_time) + "," + String(off_time));
+        Serial.println(function + " " + String(on_time) + "," + String(off_time));
     }
 }
 
