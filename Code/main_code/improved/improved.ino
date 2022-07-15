@@ -23,7 +23,7 @@ void setup() {
   pinMode(D2, OUTPUT);
   pinMode(D3, OUTPUT);
   pinMode(D4, OUTPUT);
-  pinMode(D5, INPUT);
+  pinMode(D5, INPUT_PULLUP); //otherwise high impedance makes it easy to interfere with
 
   //ensuring that all MOSFETS are open
   digitalWrite(D1, false);
@@ -67,6 +67,7 @@ bool LR(double on_time, double off_time){
     //will this run extra time when we don't need to?
     while (!digitalRead(D5)){
       Serial.println("Tripped");
+      Serial.println(String(digitalRead(D5)));
       delay(5000);
     }
     //this allows us to skip the timers later on, which can be long!
@@ -77,7 +78,7 @@ bool LR(double on_time, double off_time){
     end_timer = millis(); //takes 4us to execute
     delta_time = begin_timer - end_timer; //4us
     //total extra delay is 12us, therefore shouldn't really matter, with a strobe of 1kHz, that is only 0.12% error in the freq
-    delay(on_time-MDT);
+    delay(on_time-MDT-delta_time);
     digitalWrite(D1, false);
     digitalWrite(D4, false);
   }
