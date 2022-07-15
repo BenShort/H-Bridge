@@ -133,7 +133,7 @@ bool RL(double on_time, double off_time){
   return false;
 }
 
-void main(){
+void process(){
     if(Serial.available()){
         //process input
         value = Serial.readString();
@@ -148,12 +148,14 @@ void main(){
     }
     if(function == "LR"){
         LR(on_time, off_time);
+        Serial.println(function + " " + String(on_time) + "," + String(off_time));
     }
     else if (function == "RL"){
         RL(on_time, off_time);
+        Serial.println(function + " " + String(on_time) + "," + String(off_time));
     }
 }
 
 void loop() {
-    main();
+    process();
 }
