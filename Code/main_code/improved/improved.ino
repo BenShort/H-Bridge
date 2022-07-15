@@ -9,7 +9,7 @@ const int D1 = 2;
 const int D2 = 3;
 const int D3 = 4;
 const int D4 = 5;
-const int D5 = 6;
+const int D5 = 8; //interference from close by
 
 //other variables:
 long int begin_timer, end_timer, delta_time;
@@ -61,10 +61,12 @@ bool LR(double on_time, double off_time){
     digitalWrite(D3, false);
     digitalWrite(D4, false);
 
+    Serial.println("Tripped");
     delay(5000);
 
     //will this run extra time when we don't need to?
     while (!digitalRead(D5)){
+      Serial.println("Tripped");
       delay(5000);
     }
     //this allows us to skip the timers later on, which can be long!
@@ -97,7 +99,6 @@ bool RL(double on_time, double off_time){
   delay(MDT);
   //takes 4us to execute
   begin_timer = millis();
-
   //Safety Function
   //this limits the function to around 100kHz strobe, which is more than enough for the intended function
   if(!digitalRead(D5)){
@@ -107,8 +108,9 @@ bool RL(double on_time, double off_time){
     digitalWrite(D3, false);
     digitalWrite(D4, false);
 
-    delay(5000);
     Serial.println("Tripped");
+    delay(5000);
+    
     //will this run extra time when we don't need to?
     while (!digitalRead(D5)){
       Serial.println("Tripped");
@@ -148,11 +150,11 @@ void process(){
     }
     if(function == "LR"){
         LR(on_time, off_time);
-        Serial.println(function + " " + String(on_time) + "," + String(off_time));
+        //Serial.println(function + " " + String(on_time) + "," + String(off_time));
     }
     else if (function == "RL"){
         RL(on_time, off_time);
-        Serial.println(function + " " + String(on_time) + "," + String(off_time));
+        //Serial.println(function + " " + String(on_time) + "," + String(off_time));
     }
 }
 
