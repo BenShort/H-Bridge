@@ -58,7 +58,7 @@ class h_bridge(App):
         #LR, RL subgrid
         operation_sub_grid = GridLayout(cols = 2, size_hint_y = 1)
         
-        main_grid = GridLayout(cols=2, size_hint_y=2)
+        main_grid = GridLayout(cols=3, size_hint_y=2)
         self.lbl0 = Label(text='Enter Command Below:')
         sub_grid.add_widget(self.lbl0)
         
@@ -82,6 +82,32 @@ class h_bridge(App):
         self.off_time_lbl = Label(text = 'Off Time: ')
         self.off_time_txt = TextInput(text='')
         
+        #alternate grid
+        alternate_grid = GridLayout(cols = 1, size_hint_y=1)
+
+        self.on_time_lr_lbl = Label(text = 'On Time LR:') 
+        self.on_time_lr_txt = TextInput(text='')
+        self.off_time_lr_lbl = Label(text = 'Off Time LR:') 
+        self.off_time_lr_txt = TextInput(text='')
+        self.on_time_rl_lbl = Label(text = 'On Time RL:') 
+        self.on_time_rl_txt = TextInput(text='')
+        self.off_time_rl_lbl = Label(text = 'Off Time RL:') 
+        self.off_time_rl_txt = TextInput(text='')
+
+        alt_btn = Button(text='Send Alternate Command')
+        alt_btn.bind(on_press=self.write_alt)
+
+        alternate_grid.add_widget(self.on_time_lr_lbl)
+        alternate_grid.add_widget(self.on_time_lr_txt)
+        alternate_grid.add_widget(self.off_time_lr_lbl)
+        alternate_grid.add_widget(self.off_time_lr_txt)
+        alternate_grid.add_widget(self.on_time_rl_lbl)
+        alternate_grid.add_widget(self.on_time_rl_txt)
+        alternate_grid.add_widget(self.off_time_rl_lbl)
+        alternate_grid.add_widget(self.off_time_rl_txt)
+        alternate_grid.add_widget(alt_btn)
+        
+
         #operation grid
         lr_btn = Button(text = 'LR')
         lr_btn.bind(on_press=self.write_lr)
@@ -98,7 +124,8 @@ class h_bridge(App):
         sub_grid_2.add_widget(operation_sub_grid)
         
         main_grid.add_widget(sub_grid_2)
-        
+        main_grid.add_widget(alternate_grid)
+
         grid.add_widget(main_grid)
         
         return grid
@@ -121,6 +148,10 @@ class h_bridge(App):
         self.arduino.write(text_write)
     def write_lr(self, userInput):
         modified_text = "LR " + self.on_time_txt.text + "," + self.off_time_txt.text
+        text_write = bytes(modified_text, 'utf-8')
+        self.arduino.write(text_write)
+    def write_alt(self, userInput):
+        modified_text = "ALT " + self.on_time_lr_txt.text + "," + self.off_time_lr_txt.text + "q" + self.on_time_rl_txt.text + "w" + self.off_time_rl_txt.text
         text_write = bytes(modified_text, 'utf-8')
         self.arduino.write(text_write)
     def write_rl(self, userInput):
