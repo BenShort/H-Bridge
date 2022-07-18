@@ -14,8 +14,8 @@ const int D5 = 8; //interference from close by
 //other variables:
 long int begin_timer, end_timer, delta_time;
 int myTimeout = 10, length;
-float on_time, off_time;
-String value, function, on_time_string, off_time_string;
+float on_time, off_time, off_time_left, on_time_left, off_time_right, on_time_right;
+String value, function, on_time_string, off_time_string, on_time_left_string, off_time_left_string, on_time_right_string, off_time_right_string;
 
 void setup() {
   //Set up h-bridge pins:
@@ -67,7 +67,6 @@ bool LR(double on_time, double off_time){
     //will this run extra time when we don't need to?
     while (!digitalRead(D5)){
       Serial.println("Tripped");
-      Serial.println(String(digitalRead(D5)));
       delay(5000);
     }
     //this allows us to skip the timers later on, which can be long!
@@ -136,26 +135,62 @@ bool RL(double on_time, double off_time){
   return false;
 }
 
+bool Alternate(double on_time_left, double off_time_left, double on_time_right, double off_time_right){
+  //assumes that all gates are open by the time this function is reached
+  //process of closing gates:
+  if(MDT >= off_time_left || MDT >= off_time_right){
+    digitalWrite(D2, false);
+    digitalWrite(D1, false);
+    digitalWrite(D3, false);
+    digitalWrite(D4, false);
+    Serial.println("Off Times are less than MOSFET Deadtimes");
+    return true;
+  }
+  LR(on_time_left, off_time_left);
+  RL(off_time_right, off_time_right);
+}
+
+
 void process(){
     if(Serial.available()){
         //process input
         value = Serial.readString();
         int index = value.indexOf(' ');
-        int index2 = value.indexOf(',');
-        length = value.length();
         function = value.substring(0, index);
-        on_time_string = value.substring(index + 1, index2);
-        off_time_string = value.substring(index2 + 1, length);
-        on_time = on_time_string.toFloat();
-        off_time = off_time_string.toFloat();
+        if(function == "ALT"){
+            int index2 = value.indexOf(',');
+            int index3 = value.indexOf('q');
+            int index4 = value.indexOf('w');
+            length = value.length();
+            on_time_left_string = value.substring(index + 1, index2);
+            off_time_left_string = value.substring(index2 + 1, index3);
+            on_time_right_string = value.substring(index3 + 1, index4);
+            off_time_right_string = value.substring(index4 + 1, length);
+            on_time_left = on_time_left_string.toFloat();
+            off_time_left = off_time_left_string.toFloat();
+            on_time_right = on_time_right_string.toFloat();
+            off_time_right = off_time_right_string.toFloat();
+            Serial.println("Alternate " + String(on_time_left) + "," + String(off_time_left) + "," + String(on_time_right) + "," + String(off_time_right));
+        }
+        else{
+          int index2 = value.indexOf(',');
+          length = value.length();
+          on_time_string = value.substring(index + 1, index2);
+          off_time_string = value.substring(index2 + 1, length);
+          on_time = on_time_string.toFloat();
+          off_time = off_time_string.toFloat();
+          Serial.println(function + " " + String(on_time) + "," + String(off_time));
+        }
+
     }
     if(function == "LR"){
         LR(on_time, off_time);
-        Serial.println(function + " " + String(on_time) + "," + String(off_time));
     }
     else if (function == "RL"){
         RL(on_time, off_time);
-        Serial.println(function + " " + String(on_time) + "," + String(off_time));
+    }
+    else if (function == "ALT"){
+        Alternate(on_time_left, off_time_left, on_time_right, off_time_right);
     }
 }
 
